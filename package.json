@@ -1,0 +1,17 @@
+{
+  "name": "ngx-hymnlist-parser",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^12.2.0",
+    "@angular/core": "^12.2.0"
+  },
+  "dependencies": {
+    "range-selection-parser": "^0.0.1",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.1.0",
+    "@typescript-eslint/parser": "^5.1.0",
+    "eslint": "^8.0.1"
+  }
+}
