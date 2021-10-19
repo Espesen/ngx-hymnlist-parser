@@ -14,4 +14,15 @@ describe('NgxHymnlistParserService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  describe('method parseSingleLine', () => {
+    it('should...', () => {
+      undefined;
+    });
+  });
+  describe('method parseHymnList', () => {
+    it('should...', () => {
+      undefined;
+    });
+  });
 });
