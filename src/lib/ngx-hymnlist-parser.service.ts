@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { catchError, concat, map, Observable, of, throwError, toArray } from 'rxjs';
-import { allHymns } from '../all-hymns';
-import { HymnList, HymnListInputError, HymnListItem } from '../data-interfaces';
+import { allHymns } from './all-hymns';
+import { HymnList, HymnListInputError, HymnListItem } from './data-interfaces';
 import { NgxHymnlistParserModule } from './ngx-hymnlist-parser.module';
 import * as selectionParser from 'range-selection-parser';
 
