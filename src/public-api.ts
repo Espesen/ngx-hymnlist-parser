@@ -4,3 +4,4 @@
 
 export * from './lib/ngx-hymnlist-parser.service';
 export * from './lib/ngx-hymnlist-parser.module';
+export * from './lib/data-interfaces';
