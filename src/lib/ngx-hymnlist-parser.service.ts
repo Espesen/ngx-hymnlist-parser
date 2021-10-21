@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { catchError, concat, map, Observable, of, throwError, toArray } from 'rxjs';
+import { concat, Observable, of, throwError } from 'rxjs';
+import { catchError, map, toArray } from "rxjs/operators";
 import { allHymns } from './all-hymns';
 import { HymnList, HymnListInputError, HymnListItem } from './data-interfaces';
 import { NgxHymnlistParserModule } from './ngx-hymnlist-parser.module';
