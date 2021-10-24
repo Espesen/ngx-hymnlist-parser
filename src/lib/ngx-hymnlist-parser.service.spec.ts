@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { catchError, concat, firstValueFrom, mapTo, Observable, of, tap } from 'rxjs';
+import { concat, firstValueFrom, Observable, of } from 'rxjs';
+import { catchError, mapTo, tap } from 'rxjs/operators';
 import { HymnList, HymnListInputError, HymnListItem, HymnParseError } from './data-interfaces';
 import { NgxHymnlistParserModule } from './ngx-hymnlist-parser.module';
 
