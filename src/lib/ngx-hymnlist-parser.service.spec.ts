@@ -1,7 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { concat, firstValueFrom, Observable, of } from 'rxjs';
-import { catchError, mapTo, tap } from 'rxjs/operators';
-import { HymnList, HymnListInputError, HymnListItem, HymnParseError } from './data-interfaces';
+import { catchError, mapTo, tap, toArray } from 'rxjs/operators';
+import {
+  HymnList,
+  HymnListInputError,
+  HymnListItem,
+  HymnParseError,
+} from './data-interfaces';
 import { NgxHymnlistParserModule } from './ngx-hymnlist-parser.module';
 
 import { NgxHymnlistParserService } from './ngx-hymnlist-parser.service';
@@ -16,13 +21,22 @@ describe('NgxHymnlistParserService', () => {
 
   it('should be created', () => {
     expect(service).toBeTruthy();
-  })
+  });
   describe('method parseSingleLine', () => {
     const succesfulTestInputs: { input: string; result: HymnListItem }[] = [
       { input: '228a', result: { hymnNumber: '228a' } },
       {
         input: 'Kiitosvirsi 130',
         result: { hymnType: 'Kiitosvirsi', hymnNumber: '130' },
+      },
+      {
+        input: 'Alkuvirsi: 933:1-3',
+        result: {
+          hymnType: 'Alkuvirsi',
+          hymnNumber: '933',
+          verses: [0, 1, 2],
+          humanReadableVerses: '1-3',
+        },
       },
       {
         input: 'Päivän virsi 13',
@@ -61,27 +75,29 @@ describe('NgxHymnlistParserService', () => {
     ];
 
     it('should successfully parse', async () => {
-      const testFn = (result: HymnListItem, index: number): boolean =>
+      const testFn = (result: HymnListItem, index: number): void =>
         expect(result)
           .withContext(`test input ${succesfulTestInputs[index].input}`)
           .toEqual(succesfulTestInputs[index].result);
 
-      await firstValueFrom(concat(
-        ...succesfulTestInputs.map((test, index) =>
-          service.parseSingleLine(test.input).pipe(
-            tap(result => testFn(result, index)),
-            catchError(err =>
-              of(
-                fail(
-                  `Failed at test input ${test.input}: ${
-                    (err as Error).message ?? err
-                  }`
+      await firstValueFrom(
+        concat(
+          ...succesfulTestInputs.map((test, index) =>
+            service.parseSingleLine(test.input).pipe(
+              tap(result => testFn(result, index)),
+              catchError(err =>
+                of(
+                  fail(
+                    `Failed at test input ${test.input}: ${
+                      (err as Error).message ?? err
+                    }`
+                  )
                 )
               )
             )
           )
-        )
-      ));
+        ).pipe(toArray())
+      );
     });
 
     it('should throw errors', async () => {
@@ -163,9 +179,8 @@ describe('NgxHymnlistParserService', () => {
     });
 
     it('should throw a hymnlistinputerror', async () => {
-      await firstValueFrom(service
-        .parseHymnList('foo\n555')
-        .pipe(
+      await firstValueFrom(
+        service.parseHymnList('foo\n555').pipe(
           tap(() => fail('should have thrown')),
           catchError(err => {
             expect(err instanceof HymnListInputError)
@@ -173,7 +188,8 @@ describe('NgxHymnlistParserService', () => {
               .toBe(true);
             return of(undefined);
           })
-        ))
+        )
+      );
     });
   });
 });

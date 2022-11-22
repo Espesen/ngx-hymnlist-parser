@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { concat, Observable, of, throwError } from 'rxjs';
-import { catchError, map, toArray } from "rxjs/operators";
+import { catchError, map, toArray } from 'rxjs/operators';
 import { allHymns } from './all-hymns';
 import { HymnList, HymnListInputError, HymnListItem } from './data-interfaces';
 import { NgxHymnlistParserModule } from './ngx-hymnlist-parser.module';
@@ -33,7 +33,8 @@ export class NgxHymnlistParserService {
             hymnType: remainingString
               .trim()
               .replace(`:${verseString}`, '')
-              .trim(),
+              .trim()
+              .replace(/:$/g, ''),
           }
         : {}),
       ...(verseString
